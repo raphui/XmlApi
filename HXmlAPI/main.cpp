@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     {
         HXmlApi api( argv[1] );
 
-        qDebug() << api.getMultipleValues("serial:port") << "\n";
+        qDebug() << api.getMultipleValues("serial:port" , "value") << "\n";
     }
     else
     {

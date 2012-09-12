@@ -11,7 +11,7 @@ typedef struct trace_module
 
 trace_module trace_modules[] =
 {
-    {"HXMLAPI"             , TRACE_LEVEL_DEFAULT }
+    {"HXMLAPI"             , TRACE_LEVEL_ALL }
 
 };
 

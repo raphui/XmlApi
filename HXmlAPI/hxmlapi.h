@@ -13,10 +13,10 @@ class HXmlApi : public QObject
         HXmlApi();
         HXmlApi(QString fileName);
         ~HXmlApi();
-        QString getValue( QString tag );
-        QMap<QString, QString> getValuesInsideNode( QString tag );
+        QString getValue( QString tag , QString attribute );
+        QMap<QString, QString> getValuesInsideNode( QString tag , QString attribute  );
         QStringList getTextInsideNode( QString tag );
-        QList<QString> getMultipleValues(QString tag);
+        QList<QString> getMultipleValues(QString tag , QString attribute );
 
     private:
         QDomDocument configFile;

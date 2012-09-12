@@ -78,11 +78,13 @@ HXmlApi::~HXmlApi()
 
 ***************************************************************************************/
 
-QList<QString> HXmlApi::getMultipleValues( QString tag )
+QList<QString> HXmlApi::getMultipleValues( QString tag , QString attribute  )
 {
+    TRACE_2( HXMLAPI , "HXmlApi getMultipleValues( %s , %s ).", qPrintable( tag ) , qPrintable( attribute ) );
+
     int begin = tag.lastIndexOf(":");
 
-    QMap<QString, QString> valueToParse = getValuesInsideNode( tag.remove( begin , tag.size() - 1 ) );
+    QMap<QString, QString> valueToParse = getValuesInsideNode( tag.remove( begin , tag.size() - 1 ) , attribute );
 
     return valueToParse.values();
 }
@@ -100,9 +102,9 @@ QList<QString> HXmlApi::getMultipleValues( QString tag )
 
 ***************************************************************************************/
 
-QString HXmlApi::getValue(QString tag)
+QString HXmlApi::getValue(QString tag, QString attribute)
 {
-    TRACE_2( HXMLAPI , "HXmlApi getValue( %s ).", qPrintable( tag ) );
+    TRACE_2( HXMLAPI , "HXmlApi getValue( %s , %s ).", qPrintable( tag ) , qPrintable( attribute ) );
 
     QStringList pathToValue = tag.split(":");
 
@@ -133,11 +135,11 @@ QString HXmlApi::getValue(QString tag)
     }
 
     TRACE_1( HXMLAPI , "Tag name last node : %s , value : %s ", qPrintable( node.toElement().tagName() )
-                                            , qPrintable( node.toElement().attributeNode("value").value() ) );
+                                            , qPrintable( node.toElement().attributeNode( attribute ).value() ) );
 
 
     if( node.toElement().nodeName() == tag.split(":").last() )
-        return node.toElement().attributeNode("value").value();
+        return node.toElement().attributeNode( attribute ).value();
     else
         return "";
 }
@@ -160,9 +162,9 @@ QString HXmlApi::getValue(QString tag)
 
 ***************************************************************************************/
 
-QMap<QString, QString> HXmlApi::getValuesInsideNode(QString tag)
+QMap<QString, QString> HXmlApi::getValuesInsideNode(QString tag, QString attribute)
 {
-    TRACE_2( HXMLAPI , "HXmlApi getValuesInsideNode( %s ).", qPrintable( tag ) );
+    TRACE_2( HXMLAPI , "HXmlApi getValuesInsideNode( %s , %s ).", qPrintable( tag ) , qPrintable( attribute ) );
 
     QStringList pathToValue = tag.split(":");
 
@@ -197,7 +199,7 @@ QMap<QString, QString> HXmlApi::getValuesInsideNode(QString tag)
     for( int i = 0 ; i < nodeList.size() ; i++ )
     {
         if( nodeList.at( i ).nodeName() == tag.split(":").last() )
-            returnMap.insertMulti( nodeList.at( i ).nodeName() , nodeList.at( i ).toElement().attributeNode("value").value() );
+            returnMap.insertMulti( nodeList.at( i ).nodeName() , nodeList.at( i ).toElement().attributeNode( attribute ).value() );
         else
             returnMap.insertMulti( "" , "" );
     }
